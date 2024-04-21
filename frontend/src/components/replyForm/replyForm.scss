@@ -1,0 +1,47 @@
+$base-color: #847de2;
+$border-dark: rgba($base-color, 0.88);
+
+.reply-body {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 500px) {
+  .reply-body {
+    flex-direction: column;
+  }
+  .card-avatar {
+    display: none;
+  }
+  #question-form {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.reply-buttons {
+  display: flex;
+  align-items: center;
+}
+.reply-body .card-avatar {
+  margin-right: 10px;
+}
+
+.reply-body .reply-input {
+  width: 100%;
+}
+
+.reply-body button {
+  height: 50%;
+}
+
+#cancel-reply {
+  color: $base-color;
+  border: none;
+}
+
+#send-reply {
+  border: 1px solid $border-dark;
+  background-color: $base-color;
+  color: white;
+}

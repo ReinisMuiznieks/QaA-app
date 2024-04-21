@@ -5,12 +5,18 @@ import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import ReplyCard from "../replyCard/replyCard";
+import ReplyForm from "../replyForm/replyForm";
 
 function QuestionCard() {
   const [expanded, setExpanded] = useState(false);
+  const [reply, setReply] = useState(false);
 
   const toggleReplies = () => {
     setExpanded(!expanded);
+  };
+
+  const toggleReply = () => {
+    setReply(!reply);
   };
 
   return (
@@ -48,13 +54,14 @@ function QuestionCard() {
             </div>
             <div className="replies-text">2 replies</div>
           </div>
-          <div className="reply">
+          <div className="reply" onClick={toggleReply}>
             <Button variant="outlined" id="reply">
               Reply
             </Button>
           </div>
         </div>
       </div>
+      {reply ? <ReplyForm /> : <></>}
       {expanded ? <ReplyCard /> : <></>}
     </>
   );
