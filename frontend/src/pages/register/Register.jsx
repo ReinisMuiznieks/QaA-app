@@ -1,11 +1,10 @@
-import React from "react";
-import "./register.scss";
+import React, { useState } from "react";
 import "../login/login.scss";
 import Container from "react-bootstrap/Container";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import FormHelperText from "@mui/material/FormHelperText";
 
 function Register() {
   const [formData, setFormData] = useState({
@@ -23,21 +22,49 @@ function Register() {
     }));
   };
 
+  const [usernameError, setUsernameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [password2Error, setPassword2Error] = useState(false);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const uppercaseRegex = /[A-Z]/;
 
     if (!username || username.length < 3 || username.length > 12) {
-      console.log("Name must be between 3-12 characters.");
-    } else if (!email) {
-      console.log("Email is required.");
-    } else if (!password || password.length < 6) {
-      console.log("Password must be at least 6 symbols long.");
-    } else if (!uppercaseRegex.test(password)) {
-      console.log("Password must contain at least one capital letter.");
-    } else if (password !== password2) {
-      console.log("Password do not match!");
+      setUsernameError(true);
     } else {
+      setUsernameError(false);
+    }
+
+    if (!email) {
+      setEmailError(true);
+    } else {
+      setEmailError(false);
+    }
+
+    if (!password || password.length < 6) {
+      setPasswordError(true);
+    } else if (!uppercaseRegex.test(password)) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+
+    if (password !== password2) {
+      setPassword2Error(true);
+    } else {
+      setPassword2Error(false);
+    }
+
+    if (
+      username &&
+      email &&
+      password &&
+      password2 &&
+      !passwordError &&
+      !password2Error
+    ) {
       const userData = {
         username,
         email,
@@ -55,7 +82,7 @@ function Register() {
           <Box
             component="div"
             sx={{
-              "& > :not(style)": { mb: 3, width: "100%" },
+              "& > :not(style)": { mb: 2, width: "100%" },
             }}
             noValidate
             autoComplete="off"
@@ -69,6 +96,11 @@ function Register() {
               onChange={onChange}
               name="email"
             />
+            {emailError && (
+              <FormHelperText id="component-error-text">
+                Email is required.
+              </FormHelperText>
+            )}
             <TextField
               label="Username"
               variant="outlined"
@@ -78,6 +110,11 @@ function Register() {
               onChange={onChange}
               name="username"
             />
+            {usernameError && (
+              <FormHelperText id="component-error-text">
+                Name must be between 3-12 characters.
+              </FormHelperText>
+            )}
             <TextField
               label="Password"
               variant="outlined"
@@ -87,6 +124,12 @@ function Register() {
               onChange={onChange}
               name="password"
             />
+            {passwordError && (
+              <FormHelperText id="component-error-text">
+                Password must be at least 6 symbols long and contain at least
+                one capital letter.
+              </FormHelperText>
+            )}
             <TextField
               label="Confirm password"
               variant="outlined"
@@ -96,6 +139,11 @@ function Register() {
               onChange={onChange}
               name="password2"
             />
+            {password2Error && (
+              <FormHelperText id="component-error-text">
+                Passwords do not match.
+              </FormHelperText>
+            )}
           </Box>
           <Button variant="outlined" type="submit" id="submit-form">
             Register

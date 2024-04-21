@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useState } from "react";
 import "./replyForm.scss";
+import FormHelperText from "@mui/material/FormHelperText";
 
 function ReplyForm() {
   const [formData, setFormData] = useState({
@@ -20,13 +21,15 @@ function ReplyForm() {
       [e.target.name]: e.target.value,
     }));
   };
+  const [contentError, setContentError] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!content) {
-      console.log("Content is required.");
+      setContentError(true);
     } else {
+      setContentError(false);
       const questionData = {
         content,
       };
@@ -48,19 +51,26 @@ function ReplyForm() {
           </div>
           <div className="reply-input">
             <form id="question-form" onSubmit={handleSubmit}>
-              <TextField
-                id="outlined-multiline-flexible"
-                label="Reply"
-                multiline
-                maxRows={4}
-                variant="outlined"
-                type="text"
-                autoComplete="off"
-                value={content}
-                onChange={onChange}
-                name="content"
-                className="question-textfield"
-              />
+              <div className="reply-field">
+                <TextField
+                  id="outlined-multiline-flexible"
+                  label="Reply"
+                  multiline
+                  maxRows={4}
+                  variant="outlined"
+                  type="text"
+                  autoComplete="off"
+                  value={content}
+                  onChange={onChange}
+                  name="content"
+                  className="question-textfield"
+                />
+                {contentError && (
+                  <FormHelperText id="content-error-text">
+                    Content is required.
+                  </FormHelperText>
+                )}
+              </div>
               <div className="reply-buttons">
                 <Button
                   variant="outlined"

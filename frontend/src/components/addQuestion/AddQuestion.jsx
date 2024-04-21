@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "./question.scss";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
+import FormHelperText from "@mui/material/FormHelperText";
 
 function AddQuestion() {
   const [formData, setFormData] = useState({
@@ -17,12 +17,15 @@ function AddQuestion() {
     }));
   };
 
+  const [contentError, setContentError] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!content) {
-      console.log("Content is required.");
+      setContentError(true);
     } else {
+      setContentError(false);
       const questionData = {
         content,
       };
@@ -34,19 +37,26 @@ function AddQuestion() {
     <>
       <h2 id="question-title">Ask anything!</h2>
       <form id="question-form" onSubmit={handleSubmit}>
-        <TextField
-          id="outlined-multiline-flexible"
-          label="Question"
-          multiline
-          maxRows={4}
-          variant="outlined"
-          type="text"
-          autoComplete="off"
-          value={content}
-          onChange={onChange}
-          name="content"
-          className="question-textfield"
-        />
+        <div className="question-input">
+          <TextField
+            id="outlined-multiline-flexible"
+            label="Question"
+            multiline
+            maxRows={4}
+            variant="outlined"
+            type="text"
+            autoComplete="off"
+            value={content}
+            onChange={onChange}
+            name="content"
+            className="question-textfield"
+          />
+          {contentError && (
+            <FormHelperText id="content-error-text">
+              Content is required.
+            </FormHelperText>
+          )}
+        </div>
         <Button variant="outlined" type="submit" id="submit-question-form">
           Ask
         </Button>

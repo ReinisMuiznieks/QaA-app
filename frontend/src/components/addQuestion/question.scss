@@ -8,14 +8,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  width: 100%;
 }
 
-.question-textfield {
-  width: 92%;
+.question-textfield,
+.question-input {
+  width: 100%;
 }
 
 #submit-question-form {
   margin-left: 10px;
   height: 56px;
   width: 7%;
+  margin-bottom: auto;
 }

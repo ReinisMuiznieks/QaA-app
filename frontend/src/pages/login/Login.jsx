@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import "./login.scss";
 import Container from "react-bootstrap/Container";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
-import { useState } from "react";
+import FormHelperText from "@mui/material/FormHelperText";
 
 function Login() {
   const [formData, setFormData] = useState({
@@ -20,14 +20,25 @@ function Login() {
     }));
   };
 
+  const [emailError, setEmailError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
     if (!email) {
-      console.log("Email is required.");
-    } else if (!password) {
-      console.log("Password is required.");
+      setEmailError(true);
     } else {
+      setEmailError(false);
+    }
+
+    if (!password) {
+      setPasswordError(true);
+    } else {
+      setPasswordError(false);
+    }
+
+    if (email && password) {
       const userData = {
         email,
         password,
@@ -44,7 +55,7 @@ function Login() {
           <Box
             component="div"
             sx={{
-              "& > :not(style)": { mb: 3, width: "100%" },
+              "& > :not(style)": { mb: 2, width: "100%" },
             }}
             noValidate
             autoComplete="off"
@@ -58,6 +69,11 @@ function Login() {
               onChange={onChange}
               name="email"
             />
+            {emailError && (
+              <FormHelperText id="component-error-text">
+                Email is required.
+              </FormHelperText>
+            )}
             <TextField
               label="Password"
               variant="outlined"
@@ -67,6 +83,11 @@ function Login() {
               onChange={onChange}
               name="password"
             />
+            {passwordError && (
+              <FormHelperText id="component-error-text">
+                Password is required.
+              </FormHelperText>
+            )}
           </Box>
           <Button variant="outlined" type="submit" id="submit-form">
             Login

@@ -6,6 +6,10 @@ $border-dark: rgba($base-color, 0.88);
   align-items: center;
 }
 
+.reply-field {
+  width: 100%;
+}
+
 @media (max-width: 500px) {
   .reply-body {
     flex-direction: column;
@@ -13,7 +17,7 @@ $border-dark: rgba($base-color, 0.88);
   .card-avatar {
     display: none;
   }
-  #question-form {
+  .reply-body #question-form {
     display: flex;
     flex-direction: column;
   }
