@@ -1,0 +1,44 @@
+.card {
+  margin-top: 20px;
+  width: 100%;
+  background-color: red;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+}
+.card-subheader {
+  margin-left: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.card-date {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.replies {
+  color: rgb(66, 66, 248);
+  display: flex;
+  cursor: pointer;
+}
+
+.replies-text {
+  margin-left: 5px;
+}
+
+.card-sm {
+  width: 90%;
+  margin-left: auto;
+  margin-bottom: 50px;
+}
