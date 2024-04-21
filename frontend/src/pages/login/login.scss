@@ -1,0 +1,21 @@
+$base-color: #847de2;
+$border-dark: rgba($base-color, 0.88);
+
+#login-title {
+  margin-top: 10vh;
+  text-align: center;
+}
+#login-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  margin: auto;
+  margin-top: 4vh;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset;
+}
