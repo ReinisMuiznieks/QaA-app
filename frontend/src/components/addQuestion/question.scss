@@ -1,0 +1,21 @@
+#question-title {
+  text-align: left;
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+#question-form {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.question-textfield {
+  width: 92%;
+}
+
+#submit-question-form {
+  margin-left: 10px;
+  height: 56px;
+  width: 7%;
+}
