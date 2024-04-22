@@ -5,8 +5,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import FormHelperText from "@mui/material/FormHelperText";
+import { useNavigate } from "react-router-dom";
 
 function Register() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -27,7 +29,7 @@ function Register() {
   const [passwordError, setPasswordError] = useState(false);
   const [password2Error, setPassword2Error] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const uppercaseRegex = /[A-Z]/;
 
@@ -63,14 +65,34 @@ function Register() {
       password &&
       password2 &&
       !passwordError &&
-      !password2Error
+      !password2Error &&
+      !emailError &&
+      !usernameError
     ) {
       const userData = {
         username,
         email,
         password,
       };
-      console.log(userData);
+
+      try {
+        const response = await fetch("http://localhost:5267/api/user", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to register user");
+        }
+
+        console.log("User registered successfully");
+        navigate("/");
+      } catch (error) {
+        console.error("Error registering user:", error.message);
+      }
     }
   };
 
