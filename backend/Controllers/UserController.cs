@@ -5,6 +5,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.IdentityModel.Tokens;
+
 namespace QaAAppBackend.Controllers
 {
     [ApiController]
@@ -103,5 +108,56 @@ namespace QaAAppBackend.Controllers
         {
             return _context.Users.Any(e => e.Id == id);
         }
+
+        private string GenerateJwtToken(User user)
+        {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes("sndfnIABIFDBSAIUB328y43jbsdbda98sdIBxsau");
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(new Claim[]
+                {
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                    new Claim(ClaimTypes.Name, user.Email),
+                }),
+                Expires = DateTime.UtcNow.AddHours(10),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+            var token = tokenHandler.CreateToken(tokenDescriptor);
+            return tokenHandler.WriteToken(token);
+        }
+
+
+        // POST: api/user/login
+        [HttpPost("login")]
+        // public async Task<ActionResult<string>> Login([FromBody] string email, string password)
+        // {
+        //     var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
+
+        //     if (user == null)
+        //     {
+        //         return Unauthorized("Invalid credentials");
+        //     }
+
+        //     var token = GenerateJwtToken(user);
+
+        //     return Ok(new { token });
+        // }
+        // POST: api/user/login
+        // [HttpPost("login")]
+        public async Task<ActionResult<string>> Login([FromBody] UserLoginDto loginDto)
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email && u.Password == loginDto.Password);
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid credentials");
+            }
+
+            var token = GenerateJwtToken(user);
+
+            return Ok(new { token });
+        }
+
     }
 }

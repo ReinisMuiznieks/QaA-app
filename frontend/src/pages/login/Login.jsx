@@ -5,8 +5,10 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import FormHelperText from "@mui/material/FormHelperText";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,7 +25,7 @@ function Login() {
   const [emailError, setEmailError] = useState(false);
   const [passwordError, setPasswordError] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!email) {
@@ -38,12 +40,34 @@ function Login() {
       setPasswordError(false);
     }
 
-    if (email && password) {
+    if (email && password && !passwordError && !emailError) {
       const userData = {
         email,
         password,
       };
       console.log(userData);
+
+      try {
+        const response = await fetch("http://localhost:5267/api/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Invalid credentials");
+        }
+
+        const data = await response.json();
+        console.log(data); // jwt token
+        navigate("/");
+        // locally store token
+      } catch (error) {
+        // Handle error
+        console.error("Login error:", error);
+      }
     }
   };
 

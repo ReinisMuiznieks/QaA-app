@@ -81,7 +81,7 @@ function Register() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify(userData),
+          body: userData,
         });
 
         if (!response.ok) {
