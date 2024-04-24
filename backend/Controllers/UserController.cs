@@ -56,7 +56,7 @@ namespace QaAAppBackend.Controllers
             await _context.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetUser), new { id = user.Id }, user);
-        }
+        }   
 
         // PUT: api/user/{id}
         [HttpPut("{id}")]
@@ -129,7 +129,7 @@ namespace QaAAppBackend.Controllers
 
 
         // POST: api/user/login
-        [HttpPost("login")]
+        // [HttpPost("login")]
         // public async Task<ActionResult<string>> Login([FromBody] string email, string password)
         // {
         //     var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
@@ -144,7 +144,7 @@ namespace QaAAppBackend.Controllers
         //     return Ok(new { token });
         // }
         // POST: api/user/login
-        // [HttpPost("login")]
+        [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody] UserLoginDto loginDto)
         {
             var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email && u.Password == loginDto.Password);
@@ -158,6 +158,5 @@ namespace QaAAppBackend.Controllers
 
             return Ok(new { token });
         }
-
     }
 }

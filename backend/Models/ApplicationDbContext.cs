@@ -8,10 +8,6 @@ namespace QaAAppBackend.Models
             : base(options)
         {
         }
-
-        // Define DbSet properties for your entities
-        // For example:
-        // public DbSet<User> Users { get; set; }
         public DbSet<User> Users { get; set; }
     }
 }

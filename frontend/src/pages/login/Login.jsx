@@ -6,6 +6,7 @@ import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import FormHelperText from "@mui/material/FormHelperText";
 import { useNavigate } from "react-router-dom";
+import AuthService from "../../features/AuthService";
 
 function Login() {
   const navigate = useNavigate();
@@ -48,22 +49,13 @@ function Login() {
       console.log(userData);
 
       try {
-        const response = await fetch("http://localhost:5267/api/user/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        });
+        const data = await AuthService.login(email, password);
 
-        if (!response.ok) {
-          throw new Error("Invalid credentials");
-        }
+        // AuthService.login will automatically store the token in localStorage
+        // so you don't need to handle it here
 
-        const data = await response.json();
         console.log(data); // jwt token
-        navigate("/");
-        // locally store token
+        navigate("/"); // Redirect to home page after successful login
       } catch (error) {
         // Handle error
         console.error("Login error:", error);
