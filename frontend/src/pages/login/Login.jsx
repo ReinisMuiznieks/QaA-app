@@ -108,6 +108,9 @@ function Login() {
           <Button variant="outlined" type="submit" id="submit-form">
             Login
           </Button>
+          <div className="underform-text">
+            Don't have an account? <a href="/register">Register</a>
+          </div>
         </form>
       </Container>
     </>

@@ -4,6 +4,7 @@ import "./home.scss";
 import Container from "react-bootstrap/Container";
 import QuestionCard from "../../components/questionCard/QuestionCard";
 import AuthService from "../../features/AuthService";
+import { Button } from "@mui/material";
 
 function Home() {
   const handleLogout = () => {
@@ -14,8 +15,14 @@ function Home() {
   return (
     <>
       <Container>
-        <h1>Home</h1>
-        <button onClick={handleLogout}>Logout</button>
+        <Button
+          onClick={handleLogout}
+          id="logout-btn"
+          size="small"
+          color="error"
+        >
+          Logout
+        </Button>
         <AddQuestion />
         <div className="pb-5"></div>
         <QuestionCard />

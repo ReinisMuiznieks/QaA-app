@@ -170,6 +170,9 @@ function Register() {
           <Button variant="outlined" type="submit" id="submit-form">
             Register
           </Button>
+          <div className="underform-text">
+            Already have an account? <a href="/login">Log In</a>
+          </div>
         </form>
       </Container>
     </>
