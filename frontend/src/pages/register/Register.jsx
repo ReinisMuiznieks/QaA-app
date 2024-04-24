@@ -5,7 +5,8 @@ import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import FormHelperText from "@mui/material/FormHelperText";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import AuthService from "../../features/AuthService";
 
 function Register() {
   const navigate = useNavigate();
@@ -76,17 +77,7 @@ function Register() {
       };
 
       try {
-        const response = await fetch("http://localhost:5267/api/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(userData),
-        });
-
-        if (!response.ok) {
-          throw new Error("Failed to register user");
-        }
+        await AuthService.register(username, email, password);
 
         console.log("User registered successfully");
         navigate("/");

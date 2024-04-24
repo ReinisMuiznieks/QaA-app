@@ -3,6 +3,7 @@ import "./question.scss";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormHelperText from "@mui/material/FormHelperText";
+import axios from "axios"; // Import Axios for making HTTP requests
 
 function AddQuestion() {
   const [formData, setFormData] = useState({
@@ -19,7 +20,7 @@ function AddQuestion() {
 
   const [contentError, setContentError] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!content) {
@@ -29,7 +30,24 @@ function AddQuestion() {
       const questionData = {
         content,
       };
-      console.log(questionData);
+
+      try {
+        const response = await fetch("http://localhost:5267/api/question", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(questionData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to create a question");
+        }
+
+        console.log("Question created successfully");
+      } catch (error) {
+        console.error("Error creating a question:", error.message);
+      }
     }
   };
 

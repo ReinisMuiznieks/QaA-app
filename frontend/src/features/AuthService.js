@@ -13,6 +13,20 @@ class AuthService {
       });
   }
 
+  register(username, email, password) {
+    return fetch("http://localhost:5267/api/user/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ username, email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        localStorage.setItem("token", data.token);
+      });
+  }
+
   logout() {
     localStorage.removeItem("token");
   }
