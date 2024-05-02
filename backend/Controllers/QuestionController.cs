@@ -42,14 +42,26 @@ namespace QaAAppBackend.Controllers
         }
 
         // POST: api/question
-        [HttpPost]
-        public async Task<ActionResult<Question>> PostQuestion(Question question)
+[HttpPost]
+    public async Task<ActionResult<Question>> PostQuestion(Question question)
+    {
+        if (!ModelState.IsValid)
         {
-            _context.Questions.Add(question);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction(nameof(GetQuestion), new { id = question.Id }, question);
+            return BadRequest(ModelState);
         }
+         if (question.UserId == 0)
+    {
+        return BadRequest("User ID is required.");
+    }
+
+        question.PostedAt = DateTime.UtcNow;
+
+        _context.Questions.Add(question);
+        await _context.SaveChangesAsync();
+
+        return CreatedAtAction(nameof(GetQuestion), new { id = question.Id }, question);
+    }
+
 
         // PUT: api/question/{id}
         [HttpPut("{id}")]

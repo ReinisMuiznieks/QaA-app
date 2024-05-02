@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 class AuthService {
   login(email, password) {
     return fetch("http://localhost:5267/api/user/login", {
@@ -37,6 +39,21 @@ class AuthService {
 
   isLoggedIn() {
     return !!localStorage.getItem("token");
+  }
+
+  getUserId() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      throw new Error("JWT token is missing.");
+    }
+
+    try {
+      const decodedToken = jwtDecode(token);
+      const userId = decodedToken.nameid;
+      return userId;
+    } catch (error) {
+      throw new Error("Failed to decode JWT token.");
+    }
   }
 }
 

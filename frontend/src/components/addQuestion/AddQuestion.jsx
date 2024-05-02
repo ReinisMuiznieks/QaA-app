@@ -1,11 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./question.scss";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import FormHelperText from "@mui/material/FormHelperText";
-import axios from "axios"; // Import Axios for making HTTP requests
+import authService from "../../features/AuthService";
 
 function AddQuestion() {
+  const [userId, setUserId] = useState(null);
+  useEffect(() => {
+    const fetchUserId = async () => {
+      const userId = authService.getUserId();
+      setUserId(userId);
+    };
+
+    fetchUserId();
+  }, []);
+
   const [formData, setFormData] = useState({
     content: "",
   });
@@ -29,6 +39,7 @@ function AddQuestion() {
       setContentError(false);
       const questionData = {
         content,
+        userId: userId,
       };
 
       try {
