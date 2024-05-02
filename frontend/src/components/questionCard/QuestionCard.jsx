@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./questionCard.scss";
 
 import Avatar from "@mui/material/Avatar";
@@ -7,9 +7,29 @@ import Button from "@mui/material/Button";
 import ReplyCard from "../replyCard/replyCard";
 import ReplyForm from "../replyForm/replyForm";
 
-function QuestionCard() {
+function QuestionCard({ userId, date, content }) {
   const [expanded, setExpanded] = useState(false);
   const [reply, setReply] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const fetchUsername = async () => {
+      try {
+        const response = await fetch(
+          `http://localhost:5267/api/user/${userId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch username");
+        }
+        const userData = await response.json();
+        setUsername(userData.username);
+      } catch (error) {
+        console.error("Error fetching username:", error.message);
+      }
+    };
+
+    fetchUsername();
+  }, [userId]);
 
   const toggleReplies = () => {
     setExpanded(!expanded);
@@ -29,20 +49,15 @@ function QuestionCard() {
         <div className="card-header">
           <div className="card-avatar">
             <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
+              {username.charAt(0).toUpperCase()}
             </Avatar>
           </div>
           <div className="card-subheader">
-            <div className="card-name">Reinis Muiznieks</div>
-            <div className="card-date">20.03.2024</div>
+            <div className="card-name">{username}</div>
+            <div className="card-date">{date}</div>
           </div>
         </div>
-        <div className="card-body">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Assumenda
-          dignissimos vel mollitia labore quos. Aspernatur eligendi
-          exercitationem voluptas dolores consequuntur. Obcaecati voluptatibus
-          doloribus aliquam veritatis ipsum aut ipsa accusamus perferendis.
-        </div>
+        <div className="card-body">{content}</div>
         <div className="card-footer">
           <div className="replies" onClick={toggleReplies}>
             <div className="replies-icon">
