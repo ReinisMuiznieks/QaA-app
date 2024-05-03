@@ -1,13 +1,10 @@
-import React from "react";
-import "../questionCard/questionCard.scss";
-
+import React, { useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import { red } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import { useState } from "react";
-import "./replyForm.scss";
 import FormHelperText from "@mui/material/FormHelperText";
+import "./replyForm.scss";
 
 function ReplyForm() {
   const [formData, setFormData] = useState({
@@ -16,32 +13,53 @@ function ReplyForm() {
   const { content } = formData;
 
   const onChange = (e) => {
+    const { name, value } = e.target;
     setFormData((prevState) => ({
       ...prevState,
-      [e.target.name]: e.target.value,
+      [name]: value,
     }));
   };
+
   const [contentError, setContentError] = useState(false);
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     if (!content) {
       setContentError(true);
-    } else {
-      setContentError(false);
-      const questionData = {
-        content,
-      };
-      console.log(questionData);
+      return;
+    }
+    const replyData = {
+      content,
+      // userID: 2,
+      // questionId: 1,
+    };
+
+    try {
+      const response = await fetch("http://localhost:5267/api/reply", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(replyData),
+      });
+      console.log(replyData);
+
+      if (!response.ok) {
+        throw new Error("Failed to post reply");
+      }
+
+      console.log("Reply posted successfully");
+
+      // Optionally, you can reset the form fields after successful submission
+      setFormData({ ...formData, content: "" });
+    } catch (error) {
+      console.error("Error posting reply:", error.message);
     }
   };
+
   return (
     <>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
-      />
       <div className="card card-sm">
         <div className="card-body reply-body">
           <div className="card-avatar">
@@ -74,9 +92,10 @@ function ReplyForm() {
               <div className="reply-buttons">
                 <Button
                   variant="outlined"
-                  type="submit"
+                  type="button"
                   className="m-2"
                   id="cancel-reply"
+                  onClick={() => setFormData({ ...formData, content: "" })}
                 >
                   Cancel
                 </Button>

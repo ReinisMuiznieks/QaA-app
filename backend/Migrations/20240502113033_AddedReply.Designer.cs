@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using QaAAppBackend.Models;
 
@@ -11,9 +12,11 @@ using QaAAppBackend.Models;
 namespace backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502113033_AddedReply")]
+    partial class AddedReply
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -60,12 +63,17 @@ namespace backend.Migrations
                     b.Property<DateTime>("PostedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("QuestionId")
+                    b.Property<int>("QuestionID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserID")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("QuestionId");
+                    b.HasIndex("QuestionID");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Replies");
                 });
@@ -100,17 +108,20 @@ namespace backend.Migrations
             modelBuilder.Entity("QaAAppBackend.Models.Reply", b =>
                 {
                     b.HasOne("QaAAppBackend.Models.Question", "Question")
-                        .WithMany("Replies")
-                        .HasForeignKey("QuestionId")
+                        .WithMany()
+                        .HasForeignKey("QuestionID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("QaAAppBackend.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Question");
-                });
 
-            modelBuilder.Entity("QaAAppBackend.Models.Question", b =>
-                {
-                    b.Navigation("Replies");
+                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

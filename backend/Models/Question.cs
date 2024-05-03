@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace QaAAppBackend.Models
 {
 public class Question
@@ -8,6 +6,8 @@ public class Question
     public string Content { get; set; }
     public int UserId { get; set; } 
     public DateTime PostedAt { get; set; }
+
+    public ICollection<Reply> Replies { get; } = new List<Reply>();
 }
 
 }
