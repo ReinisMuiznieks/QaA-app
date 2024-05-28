@@ -5,8 +5,9 @@ import TextField from "@mui/material/TextField";
 import FormHelperText from "@mui/material/FormHelperText";
 import authService from "../../features/AuthService";
 
-function AddQuestion() {
+function AddQuestion({ onQuestionAdded }) {
   const [userId, setUserId] = useState(null);
+
   useEffect(() => {
     const fetchUserId = async () => {
       const userId = authService.getUserId();
@@ -54,6 +55,10 @@ function AddQuestion() {
         if (!response.ok) {
           throw new Error("Failed to create a question");
         }
+
+        const newQuestion = await response.json();
+        onQuestionAdded(newQuestion);
+        setFormData({ content: "" });
 
         console.log("Question created successfully");
       } catch (error) {

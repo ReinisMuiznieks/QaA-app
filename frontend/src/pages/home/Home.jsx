@@ -5,10 +5,10 @@ import Container from "react-bootstrap/Container";
 import QuestionCard from "../../components/questionCard/QuestionCard";
 import AuthService from "../../features/AuthService";
 import { Button } from "@mui/material";
-import ReplyForm from "../../components/replyForm/testForm";
 
 function Home() {
   const [questions, setQuestions] = useState([]);
+
   const handleLogout = () => {
     AuthService.logout();
     window.location.reload();
@@ -31,6 +31,10 @@ function Home() {
     }
   };
 
+  const handleQuestionAdded = (newQuestion) => {
+    setQuestions((prevQuestions) => [newQuestion, ...prevQuestions]);
+  };
+
   return (
     <>
       <Container>
@@ -42,8 +46,7 @@ function Home() {
         >
           Logout
         </Button>
-        {/* <ReplyForm /> */}
-        <AddQuestion />
+        <AddQuestion onQuestionAdded={handleQuestionAdded} />
         <div className="pb-5"></div>
         {questions.map((question) => (
           <QuestionCard
