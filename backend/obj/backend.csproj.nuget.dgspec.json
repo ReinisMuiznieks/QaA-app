@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/reinismuiznieks/Desktop/QaA/backend/backend.csproj": {}
+    "/Users/reinismuiznieks/qqa2/QaA-app/backend/backend.csproj": {}
   },
   "projects": {
-    "/Users/reinismuiznieks/Desktop/QaA/backend/backend.csproj": {
+    "/Users/reinismuiznieks/qqa2/QaA-app/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/reinismuiznieks/Desktop/QaA/backend/backend.csproj",
+        "projectUniqueName": "/Users/reinismuiznieks/qqa2/QaA-app/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/Users/reinismuiznieks/Desktop/QaA/backend/backend.csproj",
+        "projectPath": "/Users/reinismuiznieks/qqa2/QaA-app/backend/backend.csproj",
         "packagesPath": "/Users/reinismuiznieks/.nuget/packages/",
-        "outputPath": "/Users/reinismuiznieks/Desktop/QaA/backend/obj/",
+        "outputPath": "/Users/reinismuiznieks/qqa2/QaA-app/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/reinismuiznieks/.nuget/NuGet/NuGet.Config"

@@ -77,7 +77,8 @@ function Register() {
       };
 
       try {
-        await AuthService.register(username, email, password);
+        const data = await AuthService.register(username, email, password);
+        console.log(data);
 
         console.log("User registered successfully");
         navigate("/");

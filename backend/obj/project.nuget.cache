@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "dZylmojKmI8VrrRpWs2kU1p5LzCAjPcGKMdnh3oOigurdRAsge78c57hz7mcKdu4jyzNaZhyfKHfZVjl82VpjQ==",
+  "dgSpecHash": "UWbXCKno5h9XWYih3LThh+SMBqsGs17WBBhW5spb82My1QbCF9X1x2YD8GC6h2nPVVdRMKxzD/tO9+ujLdxYUA==",
   "success": true,
-  "projectFilePath": "/Users/reinismuiznieks/Desktop/QaA/backend/backend.csproj",
+  "projectFilePath": "/Users/reinismuiznieks/qqa2/QaA-app/backend/backend.csproj",
   "expectedPackageFiles": [
     "/Users/reinismuiznieks/.nuget/packages/azure.core/1.35.0/azure.core.1.35.0.nupkg.sha512",
     "/Users/reinismuiznieks/.nuget/packages/azure.identity/1.10.3/azure.identity.1.10.3.nupkg.sha512",

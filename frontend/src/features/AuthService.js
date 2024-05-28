@@ -1,32 +1,56 @@
 import { jwtDecode } from "jwt-decode";
 
 class AuthService {
-  login(email, password) {
-    return fetch("http://localhost:5267/api/user/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem("token", data.token);
+  async login(email, password) {
+    try {
+      const response = await fetch("http://localhost:5267/api/user/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
+
+      const data = await response.json();
+
+      if (!data.token) {
+        throw new Error("No token found in response");
+      }
+
+      localStorage.setItem("token", data.token);
+      return data;
+    } catch (error) {
+      throw new Error(error.message || "An error occurred during login.");
+    }
   }
 
-  register(username, email, password) {
-    return fetch("http://localhost:5267/api/user/", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        localStorage.setItem("token", data.token);
+  async register(username, email, password) {
+    try {
+      const response = await fetch("http://localhost:5267/api/user/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ username, email, password }),
       });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        return await this.login(email, password);
+      } else {
+        throw new Error(data.message || "Registration failed");
+      }
+    } catch (error) {
+      throw new Error(
+        error.message || "An error occurred during registration."
+      );
+    }
   }
 
   logout() {

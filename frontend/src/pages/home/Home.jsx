@@ -42,7 +42,7 @@ function Home() {
         >
           Logout
         </Button>
-        <ReplyForm />
+        {/* <ReplyForm /> */}
         <AddQuestion />
         <div className="pb-5"></div>
         {questions.map((question) => (
