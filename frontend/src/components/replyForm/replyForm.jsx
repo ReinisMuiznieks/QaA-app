@@ -97,7 +97,7 @@ function ReplyForm() {
                   id="cancel-reply"
                   onClick={() => setFormData({ ...formData, content: "" })}
                 >
-                  Cancel
+                  Clear
                 </Button>
                 <Button variant="outlined" type="submit" id="send-reply">
                   Send
